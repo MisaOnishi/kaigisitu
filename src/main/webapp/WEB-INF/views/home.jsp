@@ -13,16 +13,18 @@ pageEncoding="utf-8" %>
 </head>
 <body>
 <h1>Spring MVC</h1>
-<P>  ${message} </P>
+<P>  ${message}</P>
 <form:form modelAttribute="command">
 <table>
 	<tr>
 	<td>Name:</td>
-	<td><form:input path="name" /></td>
+	<td><form:input path="name" /><br>
+	<span style="color:red">${name_err.defaultMessage}</span></td>
 	</tr>
 	<tr>
 	<td>Mail:</td>
-	<td><form:input path="mail" /></td>
+	<td><form:input path="mail" /><br>
+	<span style="color:red">${mail_err.defaultMessage}</span></td>
 	</tr>
 	<tr>
 	<td	colspan="2"><input type="submit"
