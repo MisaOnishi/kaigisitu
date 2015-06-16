@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!--  add database source -->
+	<bean id="mydataSource" class="org.springframework.jdbc.datasource.
+		DriverManagerDataSource">
+	<property name="drivererClassName">
+		<value>com.mysql.jdbc.Driver</value>
+	</property>
+	<property name="url">
+		<value>jdbc:mysql://Localhost:3306/data1</value>
+		</property>
+		<property name="username">
+		<value>root</value>
+		</property>
+		<property name="password">
+		<value>設定したパスワード</value>
+		</property>
+		</bean>
+
+		<bean id="myEntityDao" class="jp.levelfive.framework.MyEntityDaoImpl">
+		<property name="database" ref="mydataSource"></property>
+	</bean>
+</beans>
