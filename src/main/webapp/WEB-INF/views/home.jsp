@@ -53,7 +53,9 @@ pageEncoding="utf-8" %>
 
 <table border="0" cellspacing="1" cellpadding="1" bgcolor="#CCCCCC" style="font: 12px; color: #666666;">
 <tr>
-<td align="center" colspan="7" bgcolor="#EEEEEE" height="18" style="color: #666666;">2015年6月</td></tr>
+<td align="center" colspan="7" bgcolor="#EEEEEE" height="18" style="color: #666666;">
+<<  2015年6月 >>
+</td></tr>
 <tr>
 <td align="center" width="20" height="18" bgcolor="#FF3300" style="color: #FFFFFF;">日</td>
 <td align="center" width="20" bgcolor="#C7D8ED" style="color: #666666;">月</td>
@@ -124,12 +126,19 @@ pageEncoding="utf-8" %>
 	48個のセルを反復して生成
 	予約が2マス以上にまたがる場合は、colspanで結合する  -->
 <p>6月17日の予定</p>
-<table border ="1" width ="50%" ="20">
+<table border="">
 <tr>
 <td>会議室</td>
 <td>応接室</td>
 <td>リフレッシュルーム</td>
 </tr>
+<c:forEach var="times" begin="1" end="48">
+<tr height="10pt">
+<c:forEach var="room" begin="1" end="3">
+<td> </td>
+</c:forEach>
+</tr>
+</c:forEach>
 </table>
 
 <P>  The time on the server is ${serverTime}. </P>

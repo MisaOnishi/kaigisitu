@@ -3,10 +3,14 @@ package jp.levelfive.kaigishitsu;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+
 public class AccountBean {
-	@Size(min = 3, max = 10)
+	@Size(min = 1, max = 20)
 	private String name;
-	@Pattern(regexp = "^[a-zA-Z0-9]{8,32}$")
+	@Email
+	private String mail;
+	@Pattern(regexp = "^[0-9]{4}$")
 	private String password;
 	private String message;
 
