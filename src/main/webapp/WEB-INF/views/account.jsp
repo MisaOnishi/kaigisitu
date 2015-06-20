@@ -24,14 +24,21 @@ pageEncoding="utf-8" %>
 <form:form modelAttribute="signIn">
 	${message}<br>
 	名前:
-	<form:input path="name"/><span style="font-size:10px; color:grey">　全角　１文字～２０文字</span>
+	<form:input path="name"/>
+	<span style="font-size:10px; color:grey">　全角　１文字～２０文字</span>
 	<span style="color:red">${name_err.defaultMessage}</span>
 	<br>
+	E-mail:
+	<form:input path="email"/>
+	<span style="font-size:10px; color:grey">半角英数字</span>
+	<span style="color:red">${mail_err.defaultMessage}</span>
+	<br>
 	パスワード：
-	<form:input type="password" path="password"/><span style="font-size:10px; color:grey" >　半角　数字４文字</span>
+	<form:input type="password" path="password"/>
+	<span style="font-size:10px; color:grey" >　半角　数字４文字</span>
 	<span style="color:red">${password_err.defaultMessage}</span>
 	<br>
-	<input type="submit" value="登録" onclick="javascript:disp();"/>
+	<input type="submit" value="登録"/>
 </form:form>
 <br>
 <a href="./" >ホームページに戻る</a>

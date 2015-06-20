@@ -5,6 +5,7 @@ uri="http://www.springframework.org/tags/form" %>
 contentType="text/html; charset=utf-8"
 pageEncoding="utf-8" %>
 <%@ page session="false" %>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Tye"

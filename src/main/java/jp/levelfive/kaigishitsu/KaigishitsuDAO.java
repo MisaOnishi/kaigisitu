@@ -5,6 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -12,17 +17,21 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 public class KaigishitsuDAO extends JdbcDaoSupport {
 	private String sql = "";
+	private static final Logger logger = LoggerFactory.getLogger(KaigishitsuDAO.class);
+	@Autowired
+	DataSource dataSource;
+	// private JdbcTemplate jdbcTemplate;
 
-	private JdbcTemplate jdbcTemplate;
-
+	//アカウントを登録
 	public void setAccount(AccountData accountData) {
-		sql = "insert into user(name, password) values("
-				+ accountData.getName() + "," + accountData.getPassword() + ")";
-		System.out.println(sql);
-		new JdbcTemplate().execute(sql);
-
+		JdbcTemplate setAccount = new JdbcTemplate(dataSource);
+		sql = "insert into user(name, email, password) values('"
+				+ accountData.getName() + "','" + accountData.getEmail()
+				+ "','" + accountData.getPassword() + "')";
+		logger.info(sql);
+		setAccount.update(sql);
 	}
-
+	//アカウントリストを取得
 	public List<AccountData> getAccountList() throws DataAccessException {
 		RowMapper<AccountData> accountRowMapper = new AccountRowMapper();
 		List<AccountData> accountList = getJdbcTemplate().query(sql,
@@ -32,9 +41,7 @@ public class KaigishitsuDAO extends JdbcDaoSupport {
 
 	public List<YoyakuData> getYoyakuList() throws DataAccessException {
 		return null;
-
 	}
-
 }
 
 class AccountRowMapper implements RowMapper<AccountData> {
