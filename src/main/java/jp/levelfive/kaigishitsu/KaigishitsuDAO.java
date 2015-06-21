@@ -34,8 +34,8 @@ public class KaigishitsuDAO extends JdbcDaoSupport {
 	//アカウントリストを取得
 	public List<AccountData> getAccountList() throws DataAccessException {
 		RowMapper<AccountData> accountRowMapper = new AccountRowMapper();
-		List<AccountData> accountList = getJdbcTemplate().query(sql,
-				accountRowMapper);
+		sql = "select * from user";
+		List<AccountData> accountList = getJdbcTemplate().query(sql,accountRowMapper);
 		return accountList;
 	}
 	//TODO 当日の予約リストの取得

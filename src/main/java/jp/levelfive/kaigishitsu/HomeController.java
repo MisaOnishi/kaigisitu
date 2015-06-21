@@ -1,7 +1,5 @@
 package jp.levelfive.kaigishitsu;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
@@ -21,18 +19,18 @@ public class HomeController {
 	@Autowired
 	private KaigishitsuDAO kaigishitsuDAO;
 	private AccountData accountData;
-	private static final Logger logger = LoggerFactory
-			.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
-				DateFormat.LONG, locale);
-
+		CalendarForm calendar = new CalendarForm();
+		//
+		model.addAttribute(calendar);
 		return "home";
 	}
 
+
+/*
 	public void setAccountForm(AccountData accountForm) {
 		logger.info("setAccountForm method is called");
 		this.accountData = accountForm;
@@ -42,7 +40,7 @@ public class HomeController {
 		logger.info("getAccountForm method is called");
 		return accountData;
 	}
-
+*/
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(Model model) {
 		logger.info("account method");

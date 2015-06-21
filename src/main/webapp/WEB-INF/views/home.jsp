@@ -45,7 +45,8 @@ pageEncoding="utf-8" %>
 <!-- カレンダー -->
 <!-- forEach文で書く
 	コントローラで配列を持ち、javaのカレンダークラスから生成した日付を持たせる -->
-<h2>"currentmonth"</h2>
+<p>"currentmonth"</p>
+
 <table border="1">
 	<tr>
 		<%--<!-- c:forEach item="${list}" var="days"></c:forEach --> --%>
