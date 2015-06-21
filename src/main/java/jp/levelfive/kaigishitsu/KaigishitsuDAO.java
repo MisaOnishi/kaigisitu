@@ -23,13 +23,13 @@ public class KaigishitsuDAO extends JdbcDaoSupport {
 	// private JdbcTemplate jdbcTemplate;
 
 	//アカウントを登録
-	public void setAccount(AccountData accountData) {
+	public int setAccount(AccountData accountData) {
 		JdbcTemplate setAccount = new JdbcTemplate(dataSource);
 		sql = "insert into user(name, email, password) values('"
 				+ accountData.getName() + "','" + accountData.getEmail()
 				+ "','" + accountData.getPassword() + "')";
 		logger.info(sql);
-		setAccount.update(sql);
+		return setAccount.update(sql);
 	}
 	//アカウントリストを取得
 	public List<AccountData> getAccountList() throws DataAccessException {
@@ -38,7 +38,7 @@ public class KaigishitsuDAO extends JdbcDaoSupport {
 				accountRowMapper);
 		return accountList;
 	}
-
+	//TODO 当日の予約リストの取得
 	public List<YoyakuData> getYoyakuList() throws DataAccessException {
 		return null;
 	}
@@ -56,6 +56,7 @@ class AccountRowMapper implements RowMapper<AccountData> {
 		AccountData accountData = new AccountData();
 		accountData.setId(rs.getInt("id"));
 		accountData.setName(rs.getString("name"));
+		accountData.setEmail(rs.getString("email"));
 		accountData.setPassword(rs.getString("password"));
 		return accountData;
 	}

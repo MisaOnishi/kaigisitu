@@ -16,54 +16,46 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 	@Autowired
 	private KaigishitsuDAO kaigishitsuDAO;
-	private AccountData accountForm;
+	private AccountData accountData;
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
-	// Simply selects the home view to render by returning its name.
-
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
 				DateFormat.LONG, locale);
 
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
 		return "home";
 	}
 
 	public void setAccountForm(AccountData accountForm) {
-		this.accountForm = accountForm;
+		logger.info("setAccountForm method is called");
+		this.accountData = accountForm;
 	}
 
 	public AccountData getAccountForm() {
-		return accountForm;
+		logger.info("getAccountForm method is called");
+		return accountData;
 	}
 
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(Model model) {
 		logger.info("account method");
-		accountForm = new AccountData();
-		model.addAttribute("message", "名前と削除用のパスワードを入力してください");
-		model.addAttribute("signIn", accountForm);
+		accountData = new AccountData();
+		model.addAttribute("message", "");
+		model.addAttribute("signIn", accountData);
 		return "account";
 	}
 
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
-	public String signIn(@Valid AccountData accountForm, BindingResult result,
+	public String signIn(@Valid AccountData accountData, BindingResult result,
 			Model model) throws ServletException {
-		logger.info("sign in method");
+		logger.info("signIn method");
 		if (result.hasErrors()) {//不正な入力の場合
 			model.addAttribute("name_err", result.getFieldError("name"));
 			model.addAttribute("email_err", result.getFieldError("email"));
@@ -72,13 +64,17 @@ public class HomeController {
 
 			model.addAttribute("signIn", result.getTarget());
 		} else {//適正な入力の場合
-			System.out.println("signIn method class:" + accountForm.getClass());
-			System.out.println("signIn method name:" + accountForm.getName());
-			kaigishitsuDAO.setAccount(accountForm);//データベースに登録
+			System.out.println("signIn method class:" + accountData.getClass());
+			System.out.println("signIn method name:" + accountData.getName());
+			int setResult = kaigishitsuDAO.setAccount(accountData);//データベースに登録
+			if (setResult ==0){
+				model.addAttribute("message", "fail");
+			}else if(setResult ==1){
+				model.addAttribute("message", "success");
+			}
 			//結果を受け取って、messageにセット → ダイアログを出力
 			model.addAttribute("signIn", result.getTarget());
 		}
 		return "account";
-
 	}
 }

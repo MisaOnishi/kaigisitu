@@ -20,7 +20,8 @@ pageEncoding="utf-8" %>
 <form action="yoyaku" method="post">
 	<table>
 		<tr>
-			<td>部屋:<select name="room"><option></option></select>
+			<td>部屋:
+			<select name="room"><option></option></select>
 			<select name="month"></select>月
 			<select name="week"></select>週
 			<select name="day"></select>日
@@ -50,7 +51,6 @@ pageEncoding="utf-8" %>
 		<%--<!-- c:forEach item="${list}" var="days"></c:forEach --> --%>
 	</tr>
 </table>
-
 
 <table border="0" cellspacing="1" cellpadding="1" bgcolor="#CCCCCC" style="font: 12px; color: #666666;">
 <tr>
