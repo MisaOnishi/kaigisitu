@@ -5,9 +5,10 @@ import java.util.Calendar;
 public class CalendarForm {
 	private static int currentYear;
 	private static int currentMonth;
-	static{System.out.println("\n CalendarForm static CALL\n");
-	setCurrentYear(Calendar.getInstance().get(Calendar.YEAR));
-	setCurrentMonth(Calendar.getInstance().get(Calendar.MONTH));
+	static {
+		System.out.println("\n CalendarForm static CALL\n");
+		setCurrentYear(Calendar.getInstance().get(Calendar.YEAR));
+		setCurrentMonth(Calendar.getInstance().get(Calendar.MONTH));
 	}
 	private int year;
 	private int month;
@@ -16,53 +17,69 @@ public class CalendarForm {
 	/*
 	 * デフォルトのカレンダーを生成
 	 */
-	public CalendarForm(){
-		this.year=Calendar.YEAR;
-		this.month=Calendar.MONTH;
-		setCalendarMatrix(this.year,this.month);
+	public CalendarForm() {
+		this.year = Calendar.getInstance().get(Calendar.YEAR);
+		this.month = Calendar.getInstance().get(Calendar.MONTH);
+		setCalendarMatrix(this.year, this.month);
 	}
 
 	/*
 	 * 年月を指定してカレンダーを生成
 	 */
-	public CalendarForm(int year, int month){
-		this.year=year;
-		this.month=month;
+	public CalendarForm(int year, int month) {
+		this.year = year;
+		this.month = month;
 		setCalendarMatrix(year, month);
 	}
 
 	public static int getCurrentYear() {
 		return currentYear;
 	}
+
 	public static void setCurrentYear(int currentYear) {
 		CalendarForm.currentYear = currentYear;
 	}
+
 	public static int getCurrentMonth() {
 		return currentMonth;
 	}
+
 	public static void setCurrentMonth(int currentMonth) {
 		CalendarForm.currentMonth = currentMonth;
 	}
+
 	public int getYear() {
 		return year;
 	}
+
 	public void setYear(int year) {
 		this.year = year;
 	}
+
 	public int getMonth() {
 		return month;
 	}
+
 	public void setMonth(int month) {
 		this.month = month;
 	}
+
 	public String[][] getCalendarMatrix() {
 		return calendarMatrix;
 	}
+
 	public void setCalendarMatrix(int year, int month) {
-		this.year=year;
-		this.month=month;
+		this.year = year;
+		this.month = month;
 		generateCalendar();
+		for (String[] array : calendarMatrix) {
+			for (String index : array) {
+
+				System.out.println(index);
+			}
+		}
 	}
+
 	private void generateCalendar() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear();
