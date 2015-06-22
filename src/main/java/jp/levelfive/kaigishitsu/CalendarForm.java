@@ -48,6 +48,42 @@ public class CalendarForm {
 		CalendarForm.currentMonth = currentMonth;
 	}
 
+	public static void setCurrentMonthForward(){
+		if(currentMonth >=11){
+			currentYear++;
+			currentMonth=0;
+		}else{
+			currentMonth++;
+		}
+	}
+
+	public static void setCurrentMonthBack(){
+		if(currentMonth <=0){
+			currentYear--;
+			currentMonth=11;
+		}else{
+			currentMonth--;
+		}
+	}
+
+	public void setNextMonth(int currentYear, int currentMonth){
+		if(currentMonth >=11){
+			currentYear++;
+			currentMonth=0;
+		}else{
+			currentMonth++;
+		}
+	}
+
+	public void setPrevMonth(int currentYear, int currentMonth){
+		if(currentMonth <=0){
+			currentYear--;
+			currentMonth=11;
+		}else{
+			currentMonth--;
+		}
+	}
+
 	public int getYear() {
 		return year;
 	}
