@@ -5,23 +5,21 @@
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<!--  add database source -->
-	<bean id="mydataSource" class="org.springframework.jdbc.datasource.
-		DriverManagerDataSource">
-	<property name="drivererClassName">
-		<value>com.mysql.jdbc.Driver</value>
-	</property>
-	<property name="url">
-		<value>jdbc:mysql://Localhost:3306/data1</value>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://Localhost:3306/yoyakusystem</value>
 		</property>
 		<property name="username">
-		<value>root</value>
+			<value>levelfive</value>
 		</property>
 		<property name="password">
-		<value>設定したパスワード</value>
+			<value>levelfive</value>
 		</property>
-		</bean>
-
-		<bean id="myEntityDao" class="jp.levelfive.framework.MyEntityDaoImpl">
-		<property name="database" ref="mydataSource"></property>
+	</bean>
+	<bean id="kaigishitsuDAO" class="jp.levelfive.kaigishitsu.KaigishitsuDAO">
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 </beans>

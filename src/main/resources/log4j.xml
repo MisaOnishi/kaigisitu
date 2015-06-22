@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="jp.levelfive.framework">
+	<logger name="jp.levelfive.kaigishitsu">
 		<level value="info" />
 	</logger>
 	

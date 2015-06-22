@@ -21,10 +21,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<context:component-scan base-package="jp.levelfive.framework" />
+	<context:component-scan base-package="jp.levelfive.kaigishitsu" />
 
-	<beans:import resource="database.xml" />
-
-
+	<beans:import resource="database.xml"/>
 
 </beans:beans>
