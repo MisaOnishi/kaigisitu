@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form"
 uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring"
+uri="http://www.springframework.org/tags" %>
 <%@ page language="java"
 contentType="text/html; charset=utf-8"
 pageEncoding="utf-8" %>
@@ -48,9 +50,17 @@ pageEncoding="utf-8" %>
 
 <table border="1">
 	<tr><td colspan="7">
+	<a href="back">
+	<<
+	</a>
 	${year}年
 	${month}月
+	<a href="forward">
+	 >>
+	 </a>
 	</td></tr>
+<!--
+<%--
 	<c:forEach var="week" begin="0" end="5">
 		<tr>
 			<c:forEach var="day" begin="0" end="6">
@@ -58,88 +68,17 @@ pageEncoding="utf-8" %>
 			</c:forEach>
 		</tr>
 	</c:forEach>
-	<c:forEach var="array" items="${calendarMatrix}">
+ --%>
+-->
+	<c:forEach var="array" items="${calendarMatrix}" varStatus="i">
 		<tr>
-			<c:forEach var="index" items="${array}"><td>${index.toString()}</td>
+			<c:forEach var="index" items="${array}" varStatus="j">
+			<td>${index}</td>
 			</c:forEach>
 		</tr>
 	</c:forEach>
 
 </table>
-
-<%--
-<!--
-<table border="0" cellspacing="1" cellpadding="1" bgcolor="#CCCCCC" style="font: 12px; color: #666666;">
-<tr>
-<td align="center" colspan="7" bgcolor="#EEEEEE" height="18" style="color: #666666;">
-<<  2015年6月 >>
-</td></tr>
-<tr>
-<td align="center" width="20" height="18" bgcolor="#FF3300" style="color: #FFFFFF;">日</td>
-<td align="center" width="20" bgcolor="#C7D8ED" style="color: #666666;">月</td>
-<td align="center" width="20" bgcolor="#C7D8ED" style="color: #666666;">火</td>
-<td align="center" width="20" bgcolor="#C7D8ED" style="color: #666666;">水</td>
-<td align="center" width="20" bgcolor="#C7D8ED" style="color: #666666;">木</td>
-<td align="center" width="20" bgcolor="#C7D8ED" style="color: #666666;">金</td>
-<td align="center" width="20" bgcolor="#A6C0E1" style="color: #666666;">土</td>
-</tr>
-<tr>
-<td align="center" height="18" bgcolor="#FFCC99" style="color: #666666;">　</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">1</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">2</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">3</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">4</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">5</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">6</td>
-</tr>
-<tr>
-<td align="center" height="18" bgcolor="#FFCC99" style="color: #666666;">7</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">8</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">9</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">10</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">11</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">12</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">13</td>
-</tr>
-<tr>
-<td align="center" height="18" bgcolor="#FFCC99" style="color: #666666;">14</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">15</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">16</td>
-<td align="center" bgcolor="#FF3300" style="color: #FFFFFF;">17</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">18</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">19</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">20</td>
-</tr>
-<tr>
-<td align="center" height="18" bgcolor="#FFCC99" style="color: #666666;">21</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">22</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">23</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">24</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">25</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">26</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">27</td>
-</tr>
-<tr>
-<td align="center" height="18" bgcolor="#FFCC99" style="color: #666666;">28</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">29</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">30</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">　</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">　</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">　</td>
-<td align="center" bgcolor="#FFFFFF" style="color: #666666;">　</td>
-</tr>
-<tr>
-<td bgcolor="#FFFFFF" height="18">&nbsp;</td>
-<td bgcolor="#FFFFFF">&nbsp;</td>
-<td bgcolor="#FFFFFF">&nbsp;</td>
-<td bgcolor="#FFFFFF">&nbsp;</td>
-<td bgcolor="#FFFFFF">&nbsp;</td>
-<td bgcolor="#FFFFFF">&nbsp;</td>
-<td bgcolor="#FFFFFF">&nbsp;</td>
-</tr>
-</table>
--->
---%>
 
 <!-- 一日の予定 -->
 <!-- forEach文を使って書く

@@ -1,7 +1,5 @@
 package jp.levelfive.kaigishitsu;
 
-import java.util.Locale;
-
 import javax.servlet.ServletException;
 import javax.validation.Valid;
 
@@ -19,30 +17,46 @@ public class HomeController {
 	@Autowired
 	private KaigishitsuDAO kaigishitsuDAO;
 	private AccountData accountData;
+	private CalendarForm calendar = new CalendarForm();
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Model model) {
 		CalendarForm calendar = new CalendarForm();
-		//
 		model.addAttribute("year", calendar.getYear());
 		model.addAttribute("month", calendar.getMonth() + 1);
-		model.addAttribute("calenderMatrix", calendar.getCalendarMatrix());
+		model.addAttribute("calendarMatrix", calendar.getCalendarMatrix());
 		return "home";
 	}
 
-	/*
-	 * public void setAccountForm(AccountData accountForm) {
-	 * logger.info("setAccountForm method is called"); this.accountData =
-	 * accountForm; }
-	 * 
-	 * public AccountData getAccountForm() {
-	 * logger.info("getAccountForm method is called"); return accountData; }
-	 */
+	@RequestMapping(value="/forward", method = RequestMethod.GET)
+	public String forward(Model model){
+		CalendarForm.setCurrentMonthForward();
+		int year = CalendarForm.getCurrentYear();
+		int month = CalendarForm.getCurrentMonth();
+		//12月の場合、年を一つ進めて、1月(month=0)にする
+		calendar.setCalendarMatrix(year, month);;
+		model.addAttribute("year", year);
+		model.addAttribute("month", month+1);
+		model.addAttribute("calendarMatrix",calendar.getCalendarMatrix());
+		return "home";
+	}
+
+	@RequestMapping(value="/back", method = RequestMethod.GET)
+	public String back(Model model){
+		CalendarForm.setCurrentMonthBack();
+		int year = CalendarForm.getCurrentYear();
+		int month = CalendarForm.getCurrentMonth();
+		//1月の場合、年を一つ戻して、12月(month=11)にする
+		calendar.setCalendarMatrix(year, month);
+		model.addAttribute("year", year);
+		model.addAttribute("month", month+1);
+		model.addAttribute("calendarMatrix",calendar.getCalendarMatrix());
+		return "home";
+	}
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(Model model) {
-		logger.info("account method");
 		accountData = new AccountData();
 		model.addAttribute("message", "");
 		model.addAttribute("signIn", accountData);
@@ -52,7 +66,6 @@ public class HomeController {
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
 	public String signIn(@Valid AccountData accountData, BindingResult result,
 			Model model) throws ServletException {
-		logger.info("signIn method");
 		if (result.hasErrors()) {// 不正な入力の場合
 			model.addAllAttributes(result.getAllErrors());
 			model.addAttribute("name_err", result.getFieldError("name"));
@@ -61,8 +74,6 @@ public class HomeController {
 			model.addAttribute("message", "再入力してください");
 			model.addAttribute("signIn", result.getTarget());
 		} else {// 適正な入力の場合
-			System.out.println("signIn method class:" + accountData.getClass());
-			System.out.println("signIn method name:" + accountData.getName());
 			int setResult = kaigishitsuDAO.setAccount(accountData);// データベースに登録
 			if (setResult == 0) {
 				model.addAttribute("message", "fail");
