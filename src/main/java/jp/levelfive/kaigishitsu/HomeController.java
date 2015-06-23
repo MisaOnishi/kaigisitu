@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	@Autowired
 	private KaigishitsuDAO kaigishitsuDAO;
+	@Autowired
+	private AccountDAO accountDAO;
 	private AccountData accountData;
 	private CalendarForm calendar = new CalendarForm();
 	private static final Logger logger = LoggerFactory
@@ -23,10 +25,16 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
+		//TODO 予約フォームのセット
+
+		//カレンダーのセット
 		CalendarForm calendar = new CalendarForm();
 		model.addAttribute("year", calendar.getYear());
 		model.addAttribute("month", calendar.getMonth() + 1);
 		model.addAttribute("calendarMatrix", calendar.getCalendarMatrix());
+
+		//TODO タイムテーブルのセット
+
 		return "home";
 	}
 
@@ -55,6 +63,7 @@ public class HomeController {
 		model.addAttribute("calendarMatrix",calendar.getCalendarMatrix());
 		return "home";
 	}
+
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(Model model) {
 		accountData = new AccountData();
@@ -74,7 +83,7 @@ public class HomeController {
 			model.addAttribute("message", "再入力してください");
 			model.addAttribute("signIn", result.getTarget());
 		} else {// 適正な入力の場合
-			int setResult = kaigishitsuDAO.setAccount(accountData);// データベースに登録
+			int setResult = accountDAO.setAccount(accountData);// データベースに登録
 			if (setResult == 0) {
 				model.addAttribute("message", "fail");
 			} else if (setResult == 1) {

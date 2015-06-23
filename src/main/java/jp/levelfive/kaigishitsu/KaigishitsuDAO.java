@@ -2,6 +2,7 @@ package jp.levelfive.kaigishitsu;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,45 +21,29 @@ public class KaigishitsuDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(KaigishitsuDAO.class);
 	@Autowired
 	DataSource dataSource;
-	// private JdbcTemplate jdbcTemplate;
 
-	//アカウントを登録
-	public int setAccount(AccountData accountData) {
-		JdbcTemplate setAccount = new JdbcTemplate(dataSource);
-		sql = "insert into user(name, email, password) values('"
-				+ accountData.getName() + "','" + accountData.getEmail()
-				+ "','" + accountData.getPassword() + "')";
-		logger.info(sql);
-		return setAccount.update(sql);
-	}
-	//アカウントリストを取得
-	public List<AccountData> getAccountList() throws DataAccessException {
-		RowMapper<AccountData> accountRowMapper = new AccountRowMapper();
-		sql = "select * from user";
-		List<AccountData> accountList = getJdbcTemplate().query(sql,accountRowMapper);
-		return accountList;
-	}
 	//TODO 当日の予約リストの取得
-	public List<YoyakuData> getYoyakuList() throws DataAccessException {
-		return null;
-	}
-}
-
-class AccountRowMapper implements RowMapper<AccountData> {
-	private List<AccountData> accountList = new ArrayList<AccountData>();
-
-	public List<AccountData> getResults() {
-		return accountList;
+	public List<YoyakuData> getYoyakuList(DateFormat date) throws DataAccessException {
+		RowMapper<YoyakuData> yoyakuRowMapper = new YoyakuRowMapper();
+		sql = "select (id, room, startHour, startMin, endHour, endMin ) from reservation where date";
+		List<YoyakuData> yoyakuList = getJdbcTemplate().query(sql, yoyakuRowMapper);
+		return yoyakuList;
 	}
 
-	@Override
-	public AccountData mapRow(ResultSet rs, int rowNum) throws SQLException {
-		AccountData accountData = new AccountData();
-		accountData.setId(rs.getInt("id"));
-		accountData.setName(rs.getString("name"));
-		accountData.setEmail(rs.getString("email"));
-		accountData.setPassword(rs.getString("password"));
-		return accountData;
+	//TODO 予約の登録
+	public int setYoyaku(YoyakuData yoyakuData){
+		JdbcTemplate setYoyaku = new JdbcTemplate(dataSource);
+		sql="insert into reservation(room,year,month,week,date, startTime, endTime,userId) values(";
+
+		return setYoyaku.update(sql);
+	}
+
+	//TODO 予約の削除 アカウントデータからパスワードを取得して照合し、合致すれば削除
+	public int cancelYoyaku(int id, String password){
+		JdbcTemplate cancelYoyaku = new JdbcTemplate(dataSource);
+		sql="delete from reservation where id=";
+
+		return cancelYoyaku.update(sql);
 	}
 }
 
@@ -75,3 +60,4 @@ class YoyakuRowMapper implements RowMapper<YoyakuData> {
 		return yoyakuData;
 	}
 }
+

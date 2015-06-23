@@ -22,4 +22,7 @@
 	<bean id="kaigishitsuDAO" class="jp.levelfive.kaigishitsu.KaigishitsuDAO">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
+	<bean id="accountDAO" class="jp.levelfive.kaigishitsu.AccountDAO">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
 </beans>

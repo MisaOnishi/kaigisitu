@@ -20,6 +20,8 @@ public class CalendarForm {
 	public CalendarForm() {
 		this.year = Calendar.getInstance().get(Calendar.YEAR);
 		this.month = Calendar.getInstance().get(Calendar.MONTH);
+		CalendarForm.setCurrentYear(year);
+		CalendarForm.setCurrentMonth(month);
 		setCalendarMatrix(this.year, this.month);
 	}
 
@@ -128,9 +130,9 @@ public class CalendarForm {
 		for (int row = 0, date = 1; row < 6; row++) {
 			for (int col = 0; col < 7; col++) {
 				if (row == 0 && col < startDay - 1) {
-					calendarMatrix[row][col] = "";
+					calendarMatrix[row][col] = "　";
 				} else if (date > lastDate) {
-					calendarMatrix[row][col] = "";
+					calendarMatrix[row][col] = "　";
 				} else {
 					calendarMatrix[row][col] = String.valueOf(date);
 					date++;

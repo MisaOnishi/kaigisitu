@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+
+
+body{
+	margi:0 auto;
+}
+
+.reserveForm{
+	position: center;
+	width: 100%;
+	background-color: #DDDDDD;
+	text-align: center;
+}
+.reserveTable{
+	position:center;
+}
+
+.calendarForm{
+	float:left;
+	padding: 5%;
+	position: center;
+}
+.calendar{
+	background-color: #FFFFFF;
+	padding: 10px;
+	border-collapse: collapse;
+	text-align: center;
+}
+.calendar td{
+	border: solid 1px #000000;
+	padding:10px;
+	color:#000000;
+	background-color:#FFFFFF;
+	empty-cells: show;
+}
+
+td#saturday{
+	color: #0000DD;
+	background-color: #BBBBBB;
+}
+
+td#sunday{
+	color: #DD0000;
+	background-color: #BBBBBB;
+}
+
+.timeTableForm{
+	float:right;
+	padding: 5%;
+	height:500px;
+	overflow: scroll;
+}
+
+.timeTable{
+	border: solid 1px #000000;
+	border-collapse: collapse;
+	table-layout:fixed;
+	empty-cells: show;
+}
+
+.timeTable td{
+	padding: 5px;
+}
+
+td#yoyaku{
+	border: solid 1px #000000;
+	border-collapse: collapse;
+	empty-cells:show;
+}
+
