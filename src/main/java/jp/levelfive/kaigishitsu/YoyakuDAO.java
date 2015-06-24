@@ -65,11 +65,11 @@ class YoyakuRowMapper implements RowMapper<YoyakuData> {
 		yoyakuData.setId(rs.getInt("id"));
 		yoyakuData.setRoom(rs.getInt(""));
 		yoyakuData.setStartHour(rs.getInt(""));
-		yoyakuData.setStartMin();
-		yoyakuData.setEndHour();
-		yoyakuData.setEndMin();
-		yoyakuData.setUser();
-		yoyakuData.setUsage();
+//		yoyakuData.setStartMin();
+//		yoyakuData.setEndHour();
+//		yoyakuData.setEndMin();
+//		yoyakuData.setUser();
+//		yoyakuData.setUsage();
 		return yoyakuData;
 	}
 }

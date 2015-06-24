@@ -125,11 +125,6 @@ public class CalendarForm {
 		this.year = year;
 		this.month = month;
 		generateCalendar();
-//		for (String[] array : calendarMatrix) {
-//			for (String index : array) {
-//				System.out.println(index);
-//			}
-//		}
 	}
 
 	private void generateCalendar() {

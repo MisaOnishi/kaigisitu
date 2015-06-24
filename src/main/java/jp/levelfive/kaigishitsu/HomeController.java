@@ -16,14 +16,20 @@ public class HomeController {
 	@Autowired
 	private YoyakuDAO yoyakuDAO;
 	@Autowired
+	private YoyakuOptionDAO optionDAO;
+	@Autowired
 	private AccountDAO accountDAO;
 	private AccountData accountData;
+	private YoyakuOptionList optionList = YoyakuOptionList.getInstance();
 	private CalendarForm calendar = new CalendarForm();
 	private TimeTable timeTable = new TimeTable();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		//TODO 予約フォームのセット
+		model.addAttribute("rooms", optionList.getRooms());
+		model.addAttribute("users", optionList.getUsers());
+		model.addAttribute("usages", optionList.getUsages());
 
 		//カレンダーのセット
 		CalendarForm calendar = new CalendarForm();
@@ -38,14 +44,13 @@ public class HomeController {
 	}
 
 	@RequestMapping(value="/",method=RequestMethod.POST)
-	public String home(YoyakuData yoyakuData, Model model){
+	public String yoyaku(YoyakuData yoyakuData, Model model){
 
 		return "home";
 	}
 
 	@RequestMapping(value="{index}",method=RequestMethod.GET)
 	public String date(@PathVariable String index,Model model){
-		System.out.println("CALL date method");
 		int year = CalendarForm.getCurrentYear();
 		int month = CalendarForm.getCurrentMonth();
 		calendar.setCalendarMatrix(year, month);
@@ -54,7 +59,6 @@ public class HomeController {
 		model.addAttribute("month", month + 1);
 		model.addAttribute("calendarMatrix", calendar.getCalendarMatrix());
 		//TODO TimeTableクラスからタイムテーブルを取得してAttributeにセット
-
 		return "home";
 	}
 

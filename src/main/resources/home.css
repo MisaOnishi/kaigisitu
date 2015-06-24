@@ -5,7 +5,7 @@ body{
 }
 
 .reserveForm{
-	position: inherit;
+	position: top;
 	width: 100%;
 	background-color: #DDDDDD;
 	text-align: center;
@@ -48,18 +48,15 @@ td#sunday{
 	padding: 5%;
 	height:450px;
 	overflow: scroll;
-	table-layout: fixed;
 }
 
 .timeTable{
 	border: solid 1px #000000;
 	border-collapse: collapse;
-	table-layout:fixed;
 	empty-cells: show;
 }
 td#timescale{
 	font-size: 12px;
-	table-layout: fixed;
 	text-align: left;
 }
 td#column{
