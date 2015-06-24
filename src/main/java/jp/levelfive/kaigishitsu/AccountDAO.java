@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,7 +15,6 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 public class AccountDAO extends JdbcDaoSupport{
 	private String sql = "";
-	private static final Logger logger = LoggerFactory.getLogger(KaigishitsuDAO.class);
 	@Autowired
 	DataSource dataSource;
 
@@ -27,7 +24,7 @@ public class AccountDAO extends JdbcDaoSupport{
 		sql = "insert into user(name, email, password) values('"
 				+ accountData.getName() + "','" + accountData.getEmail()
 				+ "','" + accountData.getPassword() + "')";
-		logger.info(sql);
+		System.out.println(sql);
 		return setAccount.update(sql);
 	}
 
@@ -42,7 +39,6 @@ public class AccountDAO extends JdbcDaoSupport{
 
 class AccountRowMapper implements RowMapper<AccountData> {
 	private List<AccountData> accountList = new ArrayList<AccountData>();
-
 	public List<AccountData> getResults() {
 		return accountList;
 	}

@@ -2,11 +2,10 @@
 
 
 body{
-	margi:0 auto;
 }
 
 .reserveForm{
-	position: center;
+	position: inherit;
 	width: 100%;
 	background-color: #DDDDDD;
 	text-align: center;
@@ -47,8 +46,9 @@ td#sunday{
 .timeTableForm{
 	float:right;
 	padding: 5%;
-	height:500px;
+	height:450px;
 	overflow: scroll;
+	table-layout: fixed;
 }
 
 .timeTable{
@@ -56,6 +56,14 @@ td#sunday{
 	border-collapse: collapse;
 	table-layout:fixed;
 	empty-cells: show;
+}
+td#timescale{
+	font-size: 12px;
+	table-layout: fixed;
+	text-align: left;
+}
+td#column{
+	border:solid 1px #000000;
 }
 
 .timeTable td{

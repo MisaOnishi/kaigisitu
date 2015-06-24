@@ -6,10 +6,8 @@ public class YoyakuOption {
 	private List<String> roomList;
 	private List<String> monthList;
 	private List<String> weekList;
-	private List<Integer> dayList;
+	private List<String> dayList;
 	private List<String> weekDayList;
-	private List<Integer> hourList;
-	private List<Integer> minList;
 	private List<String> userList;
 	private List<String> usageList;
 
@@ -31,10 +29,10 @@ public class YoyakuOption {
 	public void setWeekList(List<String> weekList) {
 		this.weekList = weekList;
 	}
-	public List<Integer> getDayList() {
+	public List<String> getDayList() {
 		return dayList;
 	}
-	public void setDayList(List<Integer> dayList) {
+	public void setDayList(List<String> dayList) {
 		this.dayList = dayList;
 	}
 	public List<String> getWeekDayList() {
@@ -42,18 +40,6 @@ public class YoyakuOption {
 	}
 	public void setWeekDayList(List<String> weekDayList) {
 		this.weekDayList = weekDayList;
-	}
-	public List<Integer> getHourList() {
-		return hourList;
-	}
-	public void setHourList(List<Integer> hourList) {
-		this.hourList = hourList;
-	}
-	public List<Integer> getMinList() {
-		return minList;
-	}
-	public void setMinList(List<Integer> minList) {
-		this.minList = minList;
 	}
 	public List<String> getUserList() {
 		return userList;

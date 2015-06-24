@@ -3,25 +3,23 @@ package jp.levelfive.kaigishitsu;
 import javax.servlet.ServletException;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
 	@Autowired
-	private KaigishitsuDAO kaigishitsuDAO;
+	private YoyakuDAO yoyakuDAO;
 	@Autowired
 	private AccountDAO accountDAO;
 	private AccountData accountData;
 	private CalendarForm calendar = new CalendarForm();
-	private static final Logger logger = LoggerFactory
-			.getLogger(HomeController.class);
+	private TimeTable timeTable = new TimeTable();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
@@ -34,6 +32,28 @@ public class HomeController {
 		model.addAttribute("calendarMatrix", calendar.getCalendarMatrix());
 
 		//TODO タイムテーブルのセット
+		model.addAttribute("date", CalendarForm.getToday());
+		model.addAttribute("timeTableArray", timeTable.getTimeTableArray());
+		return "home";
+	}
+
+	@RequestMapping(value="/",method=RequestMethod.POST)
+	public String home(YoyakuData yoyakuData, Model model){
+
+		return "home";
+	}
+
+	@RequestMapping(value="{index}",method=RequestMethod.GET)
+	public String date(@PathVariable String index,Model model){
+		System.out.println("CALL date method");
+		int year = CalendarForm.getCurrentYear();
+		int month = CalendarForm.getCurrentMonth();
+		calendar.setCalendarMatrix(year, month);
+		model.addAttribute("date", index);
+		model.addAttribute("year", year);
+		model.addAttribute("month", month + 1);
+		model.addAttribute("calendarMatrix", calendar.getCalendarMatrix());
+		//TODO TimeTableクラスからタイムテーブルを取得してAttributeにセット
 
 		return "home";
 	}
@@ -44,7 +64,8 @@ public class HomeController {
 		int year = CalendarForm.getCurrentYear();
 		int month = CalendarForm.getCurrentMonth();
 		//12月の場合、年を一つ進めて、1月(month=0)にする
-		calendar.setCalendarMatrix(year, month);;
+		calendar.setCalendarMatrix(year, month);
+		model.addAttribute("date", CalendarForm.getToday());
 		model.addAttribute("year", year);
 		model.addAttribute("month", month+1);
 		model.addAttribute("calendarMatrix",calendar.getCalendarMatrix());
@@ -58,6 +79,7 @@ public class HomeController {
 		int month = CalendarForm.getCurrentMonth();
 		//1月の場合、年を一つ戻して、12月(month=11)にする
 		calendar.setCalendarMatrix(year, month);
+		model.addAttribute("date", CalendarForm.getToday());
 		model.addAttribute("year", year);
 		model.addAttribute("month", month+1);
 		model.addAttribute("calendarMatrix",calendar.getCalendarMatrix());
