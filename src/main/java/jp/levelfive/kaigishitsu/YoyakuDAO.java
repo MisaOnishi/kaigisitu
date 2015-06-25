@@ -21,7 +21,7 @@ public class YoyakuDAO extends JdbcDaoSupport {
 	//TODO 当日の予約リストの取得
 	public List<YoyakuData> getYoyakuList(int year,int month, int date) throws DataAccessException {
 		RowMapper<YoyakuData> yoyakuRowMapper = new YoyakuRowMapper();
-		sql = "select (id, room, startHour, startMin, endHour, endMin ) from reservation where ";
+		sql = "select (id, room, startTime, endTime, user, usage ) from reservation where ";
 		List<YoyakuData> yoyakuList = getJdbcTemplate().query(sql, yoyakuRowMapper);
 		return yoyakuList;
 	}
@@ -29,7 +29,8 @@ public class YoyakuDAO extends JdbcDaoSupport {
 	//TODO 予約の登録
 	public int setYoyaku(YoyakuData yoyakuData){
 		//重複する予約が無いか検索
-		sql="select reId from reservation where date="+yoyakuData.getDate()+" and ";
+		sql="select reId from reservation as R where R.date='"+yoyakuData.getDate()+"' and R.roomId="+yoyakuData.getRoom()+
+				" and case when R.startTime<="+yoyakuData.getStartTime()+" then R.endTime>="+yoyakuData.getEndTime()+" when R.startTime>=";
 
 		//重複が無い場合登録
 		JdbcTemplate setYoyaku = new JdbcTemplate(dataSource);
