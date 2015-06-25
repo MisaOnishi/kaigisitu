@@ -64,7 +64,7 @@ class YoyakuRowMapper implements RowMapper<YoyakuData> {
 		//TODO 取ってくる値と、その変数名を決める
 		yoyakuData.setId(rs.getInt("id"));
 		yoyakuData.setRoom(rs.getInt(""));
-		yoyakuData.setStartHour(rs.getInt(""));
+//		yoyakuData.setStartHour(rs.getInt(""));
 //		yoyakuData.setStartMin();
 //		yoyakuData.setEndHour();
 //		yoyakuData.setEndMin();

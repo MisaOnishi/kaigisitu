@@ -3,7 +3,7 @@ package jp.levelfive.kaigishitsu;
 import java.util.List;
 
 public class TimeTable {
-	private int[][] timeTableArray;
+	private int[][] timeTableArray = new int[3][48];
 	private YoyakuDAO yoyakuDAO;
 
 	public TimeTable(){

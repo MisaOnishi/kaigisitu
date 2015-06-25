@@ -19,17 +19,25 @@ public class HomeController {
 	private YoyakuOptionDAO optionDAO;
 	@Autowired
 	private AccountDAO accountDAO;
+
 	private AccountData accountData;
-	private YoyakuOptionList optionList = YoyakuOptionList.getInstance();
+	private YoyakuOptionList optionList;
 	private CalendarForm calendar = new CalendarForm();
 	private TimeTable timeTable = new TimeTable();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
-		//TODO 予約フォームのセット
-		model.addAttribute("rooms", optionList.getRooms());
-		model.addAttribute("users", optionList.getUsers());
-		model.addAttribute("usages", optionList.getUsages());
+		//部屋　年　月　週　日　開始時刻　終了時刻　予約者　使用目的
+		optionList = optionDAO.getYoyakuOptions();
+		model.addAttribute("roomList", optionList.getRoomList());
+		model.addAttribute("yearList",optionList.getYearList());
+		model.addAttribute("monthList",optionList.getMonthList());
+		model.addAttribute("weekList",optionList.getWeekList());
+		model.addAttribute("dayList",optionList.getDayList());
+		model.addAttribute("hourList",optionList.getHourList());
+		model.addAttribute("minitList",optionList.getMinuteList());
+		model.addAttribute("users", optionList.getUserList());
+		model.addAttribute("usages", optionList.getUsageList());
 
 		//カレンダーのセット
 		CalendarForm calendar = new CalendarForm();
@@ -40,6 +48,7 @@ public class HomeController {
 		//TODO タイムテーブルのセット
 		model.addAttribute("date", CalendarForm.getToday());
 		model.addAttribute("timeTableArray", timeTable.getTimeTableArray());
+
 		return "home";
 	}
 
@@ -51,6 +60,9 @@ public class HomeController {
 
 	@RequestMapping(value="{index}",method=RequestMethod.GET)
 	public String date(@PathVariable String index,Model model){
+		//TODO 予約フォームのセット
+
+		//カレンダーのセット
 		int year = CalendarForm.getCurrentYear();
 		int month = CalendarForm.getCurrentMonth();
 		calendar.setCalendarMatrix(year, month);
@@ -59,6 +71,7 @@ public class HomeController {
 		model.addAttribute("month", month + 1);
 		model.addAttribute("calendarMatrix", calendar.getCalendarMatrix());
 		//TODO TimeTableクラスからタイムテーブルを取得してAttributeにセット
+
 		return "home";
 	}
 
@@ -73,6 +86,8 @@ public class HomeController {
 		model.addAttribute("year", year);
 		model.addAttribute("month", month+1);
 		model.addAttribute("calendarMatrix",calendar.getCalendarMatrix());
+		//TODO タイムテーブルのセット
+
 		return "home";
 	}
 

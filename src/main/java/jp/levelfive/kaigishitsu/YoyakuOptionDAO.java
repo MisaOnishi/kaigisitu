@@ -13,40 +13,36 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 public class YoyakuOptionDAO extends JdbcDaoSupport{
-	private String sql = "";
 	@Autowired
 	DataSource dataSource;
-	YoyakuOption options = new YoyakuOption();
 
-	//TODO 選択肢の取得
 	public YoyakuOptionList getYoyakuOptions() throws DataAccessException{
+		String sql;
 		RowMapper<YoyakuOption> optionRowMapper = new YoyakuOptionRowMapper();
-		YoyakuOptionList optionList = YoyakuOptionList.getInstance();
+		YoyakuOptionList optionList =new YoyakuOptionList();
 
-		sql = "select (id, room) from room";
-		optionList.setRooms(getJdbcTemplate().query(sql, optionRowMapper));
+		sql = "select roomId, roomName from room";
+		optionList.setRoomList(getJdbcTemplate().query(sql, optionRowMapper));
 
-		sql = "select (id, user) from user";
-		optionList.setUsers(getJdbcTemplate().query(sql, optionRowMapper));
+		sql = "select userId, userName from user";
+		optionList.setUserList(getJdbcTemplate().query(sql, optionRowMapper));
 
-		sql = "select (id, usage) from usage";
-		optionList.setUsers(getJdbcTemplate().query(sql, optionRowMapper));
+		sql = "select usageId, mokuteki from mokuteki";
+		optionList.setUserList(getJdbcTemplate().query(sql, optionRowMapper));
 
 		return optionList;
 	}
-
-
 }
 class YoyakuOptionRowMapper implements RowMapper<YoyakuOption>{
 	private List<YoyakuOption> optionList = new ArrayList<YoyakuOption>();
+
 	public List<YoyakuOption> getResults(){
 		return optionList;
 	}
+
 	@Override
 	public YoyakuOption mapRow(ResultSet rs, int rowNum) throws SQLException {
-		YoyakuOption option = new YoyakuOption();
-		option.setId(rs.getInt(1));
-		option.setName(rs.getString(2));
-		return null;
+
+		 return new YoyakuOption(rs.getInt(1),rs.getString(2));
 	}
 }

@@ -11,6 +11,7 @@
 <meta http-equiv="Content-Tye" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="home.css" type="text/css">
 <title>会議室予約システム</title>
+
 </head>
 
 <body>
@@ -23,17 +24,35 @@
 			<table class="reserveTable">
 				<tr>
 					<!-- 各選択肢はデータベースから候補を取得して、forEach文で並べる -->
-					<td>部屋：<select name="room">
-							<option></option>
-					</select>
-					<select name="month">
-					</select> 月 <select name="week">
-					</select> 週 <select name="day">
-					</select> 日 <select name="startHour">
-						</select> 時 <select name="startMin">
-						</select> 分 ～ <select name="endHour"></select> 時
-						<select name="endMin">
-						</select> 分
+					<td>
+					部屋：<form:select path="roomList" id="room">
+						<form:options items="${roomList}" itemValue="room" itemLabel="room"/>
+					</form:select>
+					<form:select path="monthList" id="month" onChange="setDays()">
+						<form:options items="${monthList}" itemValue="month" itemLabel="month"/>
+					</form:select> 月
+					<form:select path="weekList" id="week">
+						<form:options items="${weekList}" itemValue="week" itemLabel="week"/>
+					</form:select> 週
+
+					<form:select path="dayList" id="day">
+<!--						<form:options items="${dayList}" itemValue="day" itemLabel="day"/>  -->
+					<c:forEach var="i" begin="1" end="31" varStatus="days">
+						<form:option value="${days.i}">${days.i}</form:option>
+					</c:forEach>
+					</form:select> 日
+					<form:select path="hourList" id="startHour">
+						<form:options items="${hourList}" itemValue="month" itemLabel="month"/>
+					</form:select> 時
+					<form:select path="minitList" id="startMinute">
+						<form:options items="${minuteList}" itemValue="month" itemLabel="month"/>
+					</form:select> 分 ～
+					<form:select path="hourList" id="endHour">
+						<form:options items="${hourList}" itemValue="month" itemLabel="month"/>
+					</form:select> 時
+					<form:select path="minuteList" id="endMinute">
+						<form:options items="${minuteList}" itemValue="month" itemLabel="month"/>
+					</form:select> 分
 					</td>
 					<td rowspan="2"><input type="submit" value="予約" /></td>
 				</tr>
