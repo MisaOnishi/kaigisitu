@@ -29,6 +29,7 @@ public class HomeController {
 	public String home(Model model) {
 		//部屋　年　月　週　日　開始時刻　終了時刻　予約者　使用目的
 		optionList = optionDAO.getYoyakuOptions();
+		System.out.println("RoomList: get "+optionList.getRoomList().get(0).getName());
 		model.addAttribute("roomList", optionList.getRoomList());
 		model.addAttribute("yearList",optionList.getYearList());
 		model.addAttribute("monthList",optionList.getMonthList());

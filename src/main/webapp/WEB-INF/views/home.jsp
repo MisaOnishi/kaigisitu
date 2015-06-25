@@ -25,8 +25,8 @@
 				<tr>
 					<!-- 各選択肢はデータベースから候補を取得して、forEach文で並べる -->
 					<td>
-					部屋：<form:select path="roomList" id="room">
-						<form:options items="${roomList}" itemValue="room" itemLabel="room"/>
+					部屋：<form:select path="roomList" id="roomList">
+						<form:options items="${roomList}" itemValue="roomId" itemLabel="roomName"/>
 					</form:select>
 					<form:select path="monthList" id="month" onChange="setDays()">
 						<form:options items="${monthList}" itemValue="month" itemLabel="month"/>
@@ -34,7 +34,6 @@
 					<form:select path="weekList" id="week">
 						<form:options items="${weekList}" itemValue="week" itemLabel="week"/>
 					</form:select> 週
-
 					<form:select path="dayList" id="day">
 <!--						<form:options items="${dayList}" itemValue="day" itemLabel="day"/>  -->
 					<c:forEach var="i" begin="1" end="31" varStatus="days">
