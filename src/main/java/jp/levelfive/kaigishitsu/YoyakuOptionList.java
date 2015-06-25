@@ -27,13 +27,13 @@ public class YoyakuOptionList {
 
 	public YoyakuOptionList(){
 		int year =Calendar.getInstance().get(Calendar.YEAR);
-		int month = Calendar.getInstance().get(Calendar.MONTH);
+		int month = Calendar.getInstance().get(Calendar.MONTH) +1;
 		//年
 		for(int i = 0; i<=1; i++){
 			yearList.add(year + i);
 		}
 		//月
-		for(int i=month; i<=month+12 ; i++){
+		for(int i=month; i<month+12 ; i++){
 			if(i<=12){
 			monthList.add(new YoyakuOption(i,String.valueOf(i)));
 			}else{
@@ -43,8 +43,9 @@ public class YoyakuOptionList {
 		monthList.add(new YoyakuOption( 0, "毎"));
 
 		//週
+		weekList.add(new YoyakuOption(0," "));
 		for(int i=1; i<=6; i++){
-			monthList.add(new YoyakuOption( i, "第"+i+"週"));
+			weekList.add(new YoyakuOption( i, "第"+i));
 		}
 
 		//日

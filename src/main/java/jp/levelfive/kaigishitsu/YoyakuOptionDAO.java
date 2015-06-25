@@ -28,7 +28,7 @@ public class YoyakuOptionDAO extends JdbcDaoSupport{
 		optionList.setUserList(getJdbcTemplate().query(sql, optionRowMapper));
 
 		sql = "select usageId, mokuteki from mokuteki";
-		optionList.setUserList(getJdbcTemplate().query(sql, optionRowMapper));
+		optionList.setUsageList(getJdbcTemplate().query(sql, optionRowMapper));
 
 		return optionList;
 	}

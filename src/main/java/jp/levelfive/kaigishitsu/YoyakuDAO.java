@@ -28,19 +28,22 @@ public class YoyakuDAO extends JdbcDaoSupport {
 
 	//TODO 予約の登録
 	public int setYoyaku(YoyakuData yoyakuData){
+		//重複する予約が無いか検索
+		sql="select reId from reservation where date="+yoyakuData.getDate()+" and ";
+
+		//重複が無い場合登録
 		JdbcTemplate setYoyaku = new JdbcTemplate(dataSource);
-		sql="insert into reservation(room,year,month,week,date, startTime, endTime,userId,usageId) values("+
+		sql="insert into reservation (roomId,week,date,startTime,endTime,userId,usageId) values("+
 		yoyakuData.getRoom()+","+
-		yoyakuData.getYear()+","+
-		yoyakuData.getMonth()+""+
-		yoyakuData.getWeek()+","+
-		yoyakuData.getDay()+","+
-		yoyakuData.getStartHour()+":"+
-		yoyakuData.getStartMin()+","+
-		yoyakuData.getEndHour()+":"+
-		yoyakuData.getEndMin()+","+
+		yoyakuData.getWeek()+",'"+
+		yoyakuData.getDate()+"','"+
+		yoyakuData.getStartTime()+"','"+
+		yoyakuData.getEndTime()+"',"+
 		yoyakuData.getUser()+","+
 		yoyakuData.getUsage()+")";
+		System.out.println();
+		System.out.println(sql);
+		System.out.println();
 		return setYoyaku.update(sql);
 	}
 

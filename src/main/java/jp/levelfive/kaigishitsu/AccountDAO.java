@@ -21,7 +21,7 @@ public class AccountDAO extends JdbcDaoSupport{
 	//アカウントを登録
 	public int setAccount(AccountData accountData) {
 		JdbcTemplate setAccount = new JdbcTemplate(dataSource);
-		sql = "insert into user(name, email, password) values('"
+		sql = "insert into user(userName, email, password) values('"
 				+ accountData.getName() + "','" + accountData.getEmail()
 				+ "','" + accountData.getPassword() + "')";
 		System.out.println(sql);
@@ -47,7 +47,7 @@ class AccountRowMapper implements RowMapper<AccountData> {
 	public AccountData mapRow(ResultSet rs, int rowNum) throws SQLException {
 		AccountData accountData = new AccountData();
 		accountData.setId(rs.getInt("id"));
-		accountData.setName(rs.getString("name"));
+		accountData.setName(rs.getString("userName"));
 		accountData.setEmail(rs.getString("email"));
 		accountData.setPassword(rs.getString("password"));
 		return accountData;

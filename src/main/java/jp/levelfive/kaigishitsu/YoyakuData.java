@@ -13,6 +13,10 @@ public class YoyakuData {
 	private int endMin;
 	private int user;
 	private int usage;
+	private String date;
+	private String startTime;
+	private String endTime;
+
 	public int getId() {
 		return id;
 	}
@@ -48,6 +52,37 @@ public class YoyakuData {
 	}
 	public void setDay(int day) {
 		this.day = day;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(int year,int month,int day) {
+		this.date = year+"-"+month+"-"+day;
+	}
+	public void setDate(){
+		this.date = this.year+"-"+this.month+"-"+this.day;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime() {
+		String hour,min;
+		if(startHour<10) hour = "0"+startHour;
+		else hour=String.valueOf(startHour);
+		if(startMin<10) min = "0"+startMin;
+		else min=String.valueOf(startMin);
+		this.startTime = hour+":"+min;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime() {
+		String hour,min;
+		if(endHour<10) hour = "0"+endHour;
+		else hour=String.valueOf(endHour);
+		if(endMin<10) min = "0"+endMin;
+		else min=String.valueOf(endMin);
+		this.endTime = hour+":"+min;
 	}
 	public int getStartHour() {
 		return startHour;

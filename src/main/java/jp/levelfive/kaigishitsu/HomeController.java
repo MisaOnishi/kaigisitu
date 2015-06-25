@@ -21,24 +21,27 @@ public class HomeController {
 	private AccountDAO accountDAO;
 
 	private AccountData accountData;
+	private YoyakuData yoyakuData = new YoyakuData();
 	private YoyakuOptionList optionList;
 	private CalendarForm calendar = new CalendarForm();
 	private TimeTable timeTable = new TimeTable();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
+		//予約フォームの選択肢のセット
 		//部屋　年　月　週　日　開始時刻　終了時刻　予約者　使用目的
 		optionList = optionDAO.getYoyakuOptions();
-		System.out.println("RoomList: get "+optionList.getRoomList().get(0).getName());
+		yoyakuData = new YoyakuData();
 		model.addAttribute("roomList", optionList.getRoomList());
 		model.addAttribute("yearList",optionList.getYearList());
 		model.addAttribute("monthList",optionList.getMonthList());
 		model.addAttribute("weekList",optionList.getWeekList());
 		model.addAttribute("dayList",optionList.getDayList());
 		model.addAttribute("hourList",optionList.getHourList());
-		model.addAttribute("minitList",optionList.getMinuteList());
-		model.addAttribute("users", optionList.getUserList());
-		model.addAttribute("usages", optionList.getUsageList());
+		model.addAttribute("minuteList",optionList.getMinuteList());
+		model.addAttribute("userList", optionList.getUserList());
+		model.addAttribute("usageList", optionList.getUsageList());
+		model.addAttribute("yoyaku", yoyakuData);
 
 		//カレンダーのセット
 		CalendarForm calendar = new CalendarForm();
@@ -53,24 +56,76 @@ public class HomeController {
 		return "home";
 	}
 
-	@RequestMapping(value="/",method=RequestMethod.POST)
-	public String yoyaku(YoyakuData yoyakuData, Model model){
+	@RequestMapping(value="/",method = RequestMethod.POST)
+	public String yoyaku(YoyakuData yoyakuData, Model model,BindingResult result) throws ServletException {
+		yoyakuData.setDate();
+		yoyakuData.setStartTime();
+		yoyakuData.setEndTime();
+		int setResult = yoyakuDAO.setYoyaku(yoyakuData);
+
+		if (setResult == 0) {
+			model.addAttribute("message", "fail");
+		} else if (setResult >= 1) {
+			model.addAttribute("message", "success");
+		}
+		// 結果を受け取って、messageにセット → ダイアログを出力
+		//予約フォームの選択肢のセット
+		//部屋　年　月　週　日　開始時刻　終了時刻　予約者　使用目的
+		optionList = optionDAO.getYoyakuOptions();
+		model.addAttribute("roomList", optionList.getRoomList());
+		model.addAttribute("yearList",optionList.getYearList());
+		model.addAttribute("monthList",optionList.getMonthList());
+		model.addAttribute("weekList",optionList.getWeekList());
+		model.addAttribute("dayList",optionList.getDayList());
+		model.addAttribute("hourList",optionList.getHourList());
+		model.addAttribute("minuteList",optionList.getMinuteList());
+		model.addAttribute("userList", optionList.getUserList());
+		model.addAttribute("usageList", optionList.getUsageList());
+		model.addAttribute("yoyaku", yoyakuData);
+		model.addAttribute("yoyaku", result.getTarget());
+
+		//カレンダーのセット
+		CalendarForm calendar = new CalendarForm();
+		model.addAttribute("year", calendar.getYear());
+		model.addAttribute("month", calendar.getMonth() + 1);
+		model.addAttribute("calendarMatrix", calendar.getCalendarMatrix());
+
+		//TODO タイムテーブルのセット
+		model.addAttribute("date", CalendarForm.getToday());
+		model.addAttribute("timeTableArray", timeTable.getTimeTableArray());
 
 		return "home";
 	}
 
 	@RequestMapping(value="{index}",method=RequestMethod.GET)
 	public String date(@PathVariable String index,Model model){
-		//TODO 予約フォームのセット
+		//予約フォームの選択肢のセット
+		//部屋　年　月　週　日　開始時刻　終了時刻　予約者　使用目的
+		optionList = optionDAO.getYoyakuOptions();
+		model.addAttribute("roomList", optionList.getRoomList());
+		model.addAttribute("yearList",optionList.getYearList());
+		model.addAttribute("monthList",optionList.getMonthList());
+		model.addAttribute("weekList",optionList.getWeekList());
+		model.addAttribute("dayList",optionList.getDayList());
+		model.addAttribute("hourList",optionList.getHourList());
+		model.addAttribute("minuteList",optionList.getMinuteList());
+		model.addAttribute("userList", optionList.getUserList());
+		model.addAttribute("usageList", optionList.getUsageList());
+		model.addAttribute("yoyaku", yoyakuData);
 
 		//カレンダーのセット
 		int year = CalendarForm.getCurrentYear();
 		int month = CalendarForm.getCurrentMonth();
 		calendar.setCalendarMatrix(year, month);
-		model.addAttribute("date", index);
+		if(index!="　"){
+			model.addAttribute("date", index);
+		}else{
+			model.addAttribute("date", CalendarForm.getToday());
+		}
 		model.addAttribute("year", year);
 		model.addAttribute("month", month + 1);
 		model.addAttribute("calendarMatrix", calendar.getCalendarMatrix());
+
 		//TODO TimeTableクラスからタイムテーブルを取得してAttributeにセット
 
 		return "home";
@@ -81,6 +136,19 @@ public class HomeController {
 		CalendarForm.setCurrentMonthForward();
 		int year = CalendarForm.getCurrentYear();
 		int month = CalendarForm.getCurrentMonth();
+		//予約フォームの選択肢のセット
+		//部屋　年　月　週　日　開始時刻　終了時刻　予約者　使用目的
+		optionList = optionDAO.getYoyakuOptions();
+		model.addAttribute("roomList", optionList.getRoomList());
+		model.addAttribute("yearList",optionList.getYearList());
+		model.addAttribute("monthList",optionList.getMonthList());
+		model.addAttribute("weekList",optionList.getWeekList());
+		model.addAttribute("dayList",optionList.getDayList());
+		model.addAttribute("hourList",optionList.getHourList());
+		model.addAttribute("minuteList",optionList.getMinuteList());
+		model.addAttribute("userList", optionList.getUserList());
+		model.addAttribute("usageList", optionList.getUsageList());
+		model.addAttribute("yoyaku", yoyakuData);
 		//12月の場合、年を一つ進めて、1月(month=0)にする
 		calendar.setCalendarMatrix(year, month);
 		model.addAttribute("date", CalendarForm.getToday());
@@ -97,6 +165,19 @@ public class HomeController {
 		CalendarForm.setCurrentMonthBack();
 		int year = CalendarForm.getCurrentYear();
 		int month = CalendarForm.getCurrentMonth();
+		//予約フォームの選択肢のセット
+		//部屋　年　月　週　日　開始時刻　終了時刻　予約者　使用目的
+		optionList = optionDAO.getYoyakuOptions();
+		model.addAttribute("roomList", optionList.getRoomList());
+		model.addAttribute("yearList",optionList.getYearList());
+		model.addAttribute("monthList",optionList.getMonthList());
+		model.addAttribute("weekList",optionList.getWeekList());
+		model.addAttribute("dayList",optionList.getDayList());
+		model.addAttribute("hourList",optionList.getHourList());
+		model.addAttribute("minuteList",optionList.getMinuteList());
+		model.addAttribute("userList", optionList.getUserList());
+		model.addAttribute("usageList", optionList.getUsageList());
+		model.addAttribute("yoyaku", yoyakuData);
 		//1月の場合、年を一つ戻して、12月(month=11)にする
 		calendar.setCalendarMatrix(year, month);
 		model.addAttribute("date", CalendarForm.getToday());

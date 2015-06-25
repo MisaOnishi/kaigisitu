@@ -30,7 +30,7 @@ pageEncoding="utf-8" %>
 	<span style="color:red">${password_err.defaultMessage}</span>
 	<br>
 	<input type="submit" value="登録"/>
-	<c:if test="${message=='success'}" >
+	<c:if test="${message=='success'}">
 		<script type="text/javascript">
 			window.confirm("アカウントを登録しました")
 		</script>

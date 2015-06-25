@@ -32,7 +32,6 @@ public class AccountData {
 	}
 
 	public String getName() {
-		System.out.println("get" + this.name);
 		return name;
 	}
 

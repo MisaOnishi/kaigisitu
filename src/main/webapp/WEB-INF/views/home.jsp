@@ -9,59 +9,67 @@
 <html>
 <head>
 <meta http-equiv="Content-Tye" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="home.css" type="text/css">
+<link rel="stylesheet" href="/home.css" type="text/css">
 <title>会議室予約システム</title>
-
 </head>
-
 <body>
 	<!-- アカウント管理画面へ -->
 	<a href="account">アカウント登録</a>
 
 	<!-- 予約フォーム -->
 	<div class="reserveForm">
-		<form action="yoyaku" method="post">
+		<form:form modelAttribute="yoyaku">
 			<table class="reserveTable">
 				<tr>
 					<!-- 各選択肢はデータベースから候補を取得して、forEach文で並べる -->
 					<td>
-					部屋：<form:select path="roomList" id="roomList">
-						<form:options items="${roomList}" itemValue="roomId" itemLabel="roomName"/>
-					</form:select>
-					<form:select path="monthList" id="month" onChange="setDays()">
-						<form:options items="${monthList}" itemValue="month" itemLabel="month"/>
-					</form:select> 月
-					<form:select path="weekList" id="week">
-						<form:options items="${weekList}" itemValue="week" itemLabel="week"/>
-					</form:select> 週
-					<form:select path="dayList" id="day">
-<!--						<form:options items="${dayList}" itemValue="day" itemLabel="day"/>  -->
-					<c:forEach var="i" begin="1" end="31" varStatus="days">
+					場所：<form:select path="room" items="${roomList}" itemLabel="name" itemValue="id"/>
+					<form:select path="year" items="${yearList}"  name="year"/>
+					 年　
+					<form:select path="month" items="${monthList}" itemLabel="name" itemValue="id"
+					 onChange="setDays" id="month">
+					 	<form:option value="${month}"></form:option>
+					 </form:select>
+					 月　
+					<form:select path="week" items="${weekList}"  itemLabel="name" itemValue="id"/>
+					 週　
+					<form:select path="day" items="${dayList}" name="setDays" id="day">
+					<form:option value=" "></form:option>
+					<%--<!--<c:forEach var="i" begin="1" end="31" varStatus="days">
 						<form:option value="${days.i}">${days.i}</form:option>
-					</c:forEach>
-					</form:select> 日
-					<form:select path="hourList" id="startHour">
-						<form:options items="${hourList}" itemValue="month" itemLabel="month"/>
-					</form:select> 時
-					<form:select path="minitList" id="startMinute">
-						<form:options items="${minuteList}" itemValue="month" itemLabel="month"/>
-					</form:select> 分 ～
-					<form:select path="hourList" id="endHour">
-						<form:options items="${hourList}" itemValue="month" itemLabel="month"/>
-					</form:select> 時
-					<form:select path="minuteList" id="endMinute">
-						<form:options items="${minuteList}" itemValue="month" itemLabel="month"/>
-					</form:select> 分
+					</c:forEach>-->--%>
+					</form:select>
+					 日　
+					<form:select path="startHour" items="${hourList}"  name="startHour"/>
+					 時　
+					<form:select path="startMin" items="${minuteList}" name="stratMinute"/>
+					 分　～
+					<form:select path="endHour" items="${hourList}" name="endHour"/>
+					 時　
+					<form:select path="endMin" items="${minuteList}" name="endMinute"/>
+					 分　
 					</td>
 					<td rowspan="2"><input type="submit" value="予約" /></td>
 				</tr>
 				<tr>
-					<td>予約者：<select name="user"></select> 使用目的：<select
-						name="usage"></select>
+					<td>予約者：
+					<form:select path="user" items="${userList}" itemLabel="name" itemValue="id" name="user"/>
+					 使用目的：
+					 <form:select path="usage" items="${usageList}" itemLabel="name" itemValue="id" name="usage"/>
 					</td>
 				</tr>
 			</table>
-		</form>
+			<c:if test="${message=='success'}">
+				<script type="text/javascript">
+					window.confirm("予約しました")
+				</script>
+			</c:if>
+			<c:if test="${message='fail'}">
+				<script type="text/javascript">
+					window.confirm("予約に失敗しました")
+				</script>
+			</c:if>
+		</form:form>
 	</div>
 	<!-- カレンダー -->
 	<!-- forEach文で書く
